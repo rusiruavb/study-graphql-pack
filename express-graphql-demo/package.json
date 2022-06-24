@@ -1,0 +1,22 @@
+{
+  "name": "express-graphql-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "nodemon": "^2.0.18"
+  },
+  "scripts": {
+    "build": "babel src -d dist",
+    "start": "npm run build && node dist/index.js",
+    "dev": "nodemon --exec \"npm run start\""
+  }
+}
