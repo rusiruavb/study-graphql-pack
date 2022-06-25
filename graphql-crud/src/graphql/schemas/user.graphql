@@ -1,0 +1,28 @@
+input UserInputParams {
+  firstName: String
+  lastName: String
+  email: String
+  userName: String
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String
+  email: String!
+  userName: String!
+  createdAt: String!
+  updatedAt: String!
+  deletedAt: String
+}
+
+type Query {
+  getUsers: [User!]
+  getUser(id: Int!): User
+}
+
+type Mutation {
+  registerUser(userParams: UserInputParams): User
+  updateUser(id: Int!, userParams: UserInputParams): User
+  deleteUser(id: Int!): User
+}

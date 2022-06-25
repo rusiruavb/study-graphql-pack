@@ -1,12 +1,17 @@
-import express, { Express, Request, Response, NextFunction } from "express";
+import { ApolloServer } from "apollo-server";
+import { loadSchemaSync } from "@graphql-tools/load";
+import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import sequelize from "./database";
+import resolvers from "./graphql/resolvers";
 
 (async () => {
-  const app: Express = express();
+  const typeDefs = loadSchemaSync("./**/*.graphql", {
+    loaders: [new GraphQLFileLoader()],
+  });
 
-  app.get("/", (_req: Request, res: Response, next: NextFunction) => {
-    res.send("<h1>ToDo Server</h1>");
-    next();
+  const app = new ApolloServer({
+    typeDefs,
+    resolvers,
   });
 
   try {
@@ -19,7 +24,12 @@ import sequelize from "./database";
     console.log(error.message);
   }
 
-  app.listen(process.env.PORT || 3000, () => {
-    console.log("Server is running on http://localhost:3000");
-  });
+  app
+    .listen()
+    .then(() => {
+      console.log("Server is running on http://localhost:4000");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 })();
