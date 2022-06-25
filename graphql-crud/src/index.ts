@@ -26,8 +26,8 @@ import resolvers from "./graphql/resolvers";
 
   app
     .listen()
-    .then(() => {
-      console.log("Server is running on http://localhost:4000");
+    .then(({ url }) => {
+      console.log(`Server is running on ${url}`);
     })
     .catch((error) => {
       console.log(error.message);
