@@ -1,0 +1,25 @@
+enum Status {
+  TODO
+  IN_PROGRESS
+  COMPLETED
+}
+
+input ToDoInputParams {
+  description: String!
+  userId: Int!
+}
+
+type ToDo {
+  id: ID!
+  description: String!
+  status: Status!
+  user: User!
+}
+
+type Query {
+  getToDosForUser(id: Int!): [ToDo]
+}
+
+type Mutation {
+  addToDo(toDoParams: ToDoInputParams): ToDo
+}
