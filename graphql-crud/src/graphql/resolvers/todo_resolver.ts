@@ -14,10 +14,11 @@ export const toDoResolver = {
       await ToDo.create({
         description: args.toDoParams.description,
         UserId: args.toDoParams.userId,
+        status: "TODO",
       });
 
-      const todo = await User.findOne({
-        where: { id: args.toDoParams.userId },
+      const todo = await ToDo.findOne({
+        where: { UserId: args.toDoParams.userId },
       });
 
       console.log(JSON.parse(JSON.stringify(todo)));

@@ -13,7 +13,6 @@ type ToDo {
   id: ID!
   description: String!
   status: Status!
-  user: User!
 }
 
 type Query {

@@ -16,9 +16,18 @@ type User {
   deletedAt: String
 }
 
+type UserToDo {
+  id: ID!
+  firstName: String!
+  lastName: String
+  email: String!
+  toDos: [ToDo]
+}
+
 type Query {
   getUsers: [User!]
   getUser(id: Int!): User
+  getUserToDos(id: Int!): UserToDo
 }
 
 type Mutation {

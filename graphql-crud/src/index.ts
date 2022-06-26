@@ -3,6 +3,8 @@ import { loadSchemaSync } from "@graphql-tools/load";
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import sequelize from "./database";
 import resolvers from "./graphql/resolvers";
+import DataLoader from "dataloader";
+import ToDo from "./models/ToDo";
 
 (async () => {
   const typeDefs = loadSchemaSync("./**/*.graphql", {
@@ -12,6 +14,20 @@ import resolvers from "./graphql/resolvers";
   const app = new ApolloServer({
     typeDefs,
     resolvers,
+    context: () => {
+      return {
+        toDoLoader: new DataLoader(async (keys) => {
+          const toDos = await ToDo.findAll({ where: { UserId: keys } });
+          const toDoMap: any = {};
+          toDos.forEach((toDo: any) => {
+            toDo = JSON.parse(JSON.stringify(toDo));
+            // console.log(toDo.id);
+            toDoMap[toDo.id] = toDo;
+          });
+          return keys.map((key: any) => toDoMap[key]);
+        }),
+      };
+    },
   });
 
   try {
